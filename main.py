@@ -130,7 +130,7 @@ def train_nn(sess, epochs, batch_size, get_batches_fn, train_op, cross_entropy_l
     for epoch in range(epochs):
         for image, label in get_batches_fn(batch_size):
             # Training
-             _,loss = sess.run([train_op, cross_entropy_loss], feed_dict={
+            _,loss = sess.run([train_op, cross_entropy_loss], feed_dict={
                 input_image: image,
                 correct_label: label,
                 keep_prob: 0.5,
@@ -144,9 +144,9 @@ tests.test_train_nn(train_nn)
 
 def run():
     num_classes = 12
-    image_shape = (100, 150)
-    data_dir = '../'
-    runs_dir = './runs'
+    image_shape = (320, 480)
+    data_dir = '../../../tmp'
+    runs_dir = '../../../tmp/runs'
     #tests.test_for_kitti_dataset(data_dir)
 
     epochs = 1
@@ -161,9 +161,9 @@ def run():
 
     with tf.Session() as sess:
         # Path to vgg model
-        vgg_path = os.path.join(data_dir, '../CarND-Semantic-Segmentation/data/vgg')
+        vgg_path = os.path.join(data_dir, 'vgg')
         # Create function to get batches
-        get_batches_fn = helper.gen_batch_function(os.path.join(data_dir, 'Test'), image_shape)
+        get_batches_fn = helper.gen_batch_function(os.path.join(data_dir, 'Train'), image_shape)
 
         # OPTIONAL: Augment Images for better results
         #  https://datascience.stackexchange.com/questions/5224/how-to-prepare-augment-images-for-neural-network
