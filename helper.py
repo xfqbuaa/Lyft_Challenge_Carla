@@ -78,21 +78,20 @@ def preprocess_labels(label_image):
     #print(labels_new.shape)
     
     overlay = np.zeros_like(label_image)
-    overlay[:,:,0] = np.where(labels_new==7,0,1).astype('uint8') 
-    overlay[:,:,0] += np.where(labels_new==10,0,1).astype('uint8') 
+    overlay[:,:,0] = np.where(labels_new!=0,1,0).astype('uint8') 
     overlay[:,:,1] = np.where(labels_new==7,1,0).astype('uint8')
     overlay[:,:,2] = np.where(labels_new==10,1,0).astype('uint8')
     
     """
-    overlay = []
-    bg = np.where(labels_new==7,0,1).astype('uint8')
-    bg += np.where(labels_new==10,0,1).astype('uint8')
-    road = np.where(labels_new==7,1,0).astype('uint8')
-    car = np.where(labels_new==10,1,0).astype('uint8')
-    overlay.append(bg)
-    overlay.append(road)
-    overlay.append(car)
-    overlay = np.array(overlay)"""
+    #bg = np.where(labels_new!=0,1,0)
+    #road = np.where(labels_new==7,1,0)
+    #car = np.where(labels_new==10,1,0)
+    #overlay = np.zeros([600,800,3])
+    #print(overlay.shape)
+    #overlay[:,:,0] = bg
+    #overlay[:,:,1] = road
+    #overlay[:,:,2] = car
+    """
     
     return overlay
 
