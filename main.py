@@ -176,7 +176,7 @@ def run():
         last_layer = layers(layer3_out, layer4_out, layer7_out, num_classes)
         logits, train_op, cross_entropy_loss = optimize(last_layer, correct_label, learning_rate, num_classes)
 
-	saver = tf.train.Saver()
+        saver = tf.train.Saver()
         # TODO: Train NN using the train_nn function
         # Initialize all the Variables
         sess.run(tf.global_variables_initializer())
@@ -186,7 +186,7 @@ def run():
         train_nn(sess, epochs, batch_size, get_batches_fn, train_op, cross_entropy_loss, input_image, correct_label, keep_prob, learning_rate)
 
         # TODO: Save inference data using helper.save_inference_samples
-	saver.save(sess, 'model_test')
+        saver.save(sess, 'model_test')
         helper.save_inference_samples(runs_dir, data_dir, sess, image_shape, logits, keep_prob, input_image)
 
         # OPTIONAL: Apply the trained model to a video
