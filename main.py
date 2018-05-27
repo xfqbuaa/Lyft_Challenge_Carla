@@ -60,30 +60,30 @@ def layers(vgg_layer3_out, vgg_layer4_out, vgg_layer7_out, num_classes):
     # TODO: Implement function
     # 1-by-1 convolution
     conv_1x1 = tf.layers.conv2d(vgg_layer7_out, num_classes, 1, strides=(1,1),
-                                kernel_initializer=tf.truncated_normal_initializer(stddev=0.01))
+                                kernel_initializer=tf.truncated_normal_initializer(stddev=0.01), kernel_regularizer= tf.contrib.layers.l2_regularizer(1e-3))
 
     # FCN-8 Decoder upsample
     trans_conv1 = tf.layers.conv2d_transpose(conv_1x1, num_classes, 4, strides=(2, 2), padding='SAME',
-                                             kernel_initializer=tf.truncated_normal_initializer(stddev=0.01))
+                                             kernel_initializer=tf.truncated_normal_initializer(stddev=0.01), kernel_regularizer= tf.contrib.layers.l2_regularizer(1e-3))
 
     # FCN-8 Decoder skip connection
     # make sure the shapes are the same!
     pool_4 = tf.layers.conv2d(vgg_layer4_out, num_classes, 1, strides=(1,1),
-                              kernel_initializer=tf.truncated_normal_initializer(stddev=0.01))
+                              kernel_initializer=tf.truncated_normal_initializer(stddev=0.01), kernel_regularizer= tf.contrib.layers.l2_regularizer(1e-3))
     skip_layer2 = tf.add(trans_conv1, pool_4)
 
     # FCN-8 Decoder upsample
     trans_conv3 = tf.layers.conv2d_transpose(skip_layer2, num_classes, 4, strides=(2, 2), padding='SAME',
-                                             kernel_initializer=tf.truncated_normal_initializer(stddev=0.01))
+                                             kernel_initializer=tf.truncated_normal_initializer(stddev=0.01), kernel_regularizer= tf.contrib.layers.l2_regularizer(1e-3))
 
     # FCN-8 Decoder skip connection
     pool_3 = tf.layers.conv2d(vgg_layer3_out, num_classes, 1, strides=(1,1),
-                              kernel_initializer=tf.truncated_normal_initializer(stddev=0.01))
+                              kernel_initializer=tf.truncated_normal_initializer(stddev=0.01), kernel_regularizer= tf.contrib.layers.l2_regularizer(1e-3))
     skip_layer4 = tf.add(trans_conv3, pool_3)
 
     # FCN-8 Decoder upsample
     trans_conv5 = tf.layers.conv2d_transpose(skip_layer4, num_classes, 16, strides=(8, 8), padding='SAME',
-                                             kernel_initializer=tf.truncated_normal_initializer(stddev = 0.01))
+                                             kernel_initializer=tf.truncated_normal_initializer(stddev = 0.01), kernel_regularizer= tf.contrib.layers.l2_regularizer(1e-3))
 
     return trans_conv5
 tests.test_layers(layers)
