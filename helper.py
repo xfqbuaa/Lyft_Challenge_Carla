@@ -76,7 +76,25 @@ def preprocess_labels(label_image):
     # Return the preprocessed label image
     #print(label_image.shape)
     #print(labels_new.shape)
-    return labels_new
+    
+    overlay = np.zeros_like(label_image)
+    overlay[:,:,0] = np.where(labels_new==7,0,1).astype('uint8') 
+    overlay[:,:,0] += np.where(labels_new==10,0,1).astype('uint8') 
+    overlay[:,:,1] = np.where(labels_new==7,1,0).astype('uint8')
+    overlay[:,:,2] = np.where(labels_new==10,1,0).astype('uint8')
+    
+    """
+    overlay = []
+    bg = np.where(labels_new==7,0,1).astype('uint8')
+    bg += np.where(labels_new==10,0,1).astype('uint8')
+    road = np.where(labels_new==7,1,0).astype('uint8')
+    car = np.where(labels_new==10,1,0).astype('uint8')
+    overlay.append(bg)
+    overlay.append(road)
+    overlay.append(car)
+    overlay = np.array(overlay)"""
+    
+    return overlay
 
 
 def gen_batch_function(data_folder, image_shape):

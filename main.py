@@ -143,14 +143,14 @@ tests.test_train_nn(train_nn)
 
 
 def run():
-    num_classes = 12
+    num_classes = 3
     image_shape = (320, 480)
     data_dir = '../../../tmp'
     runs_dir = '../../../tmp/runs'
     #tests.test_for_kitti_dataset(data_dir)
 
-    epochs = 1
-    batch_size = 2
+    epochs = 2
+    batch_size = 4
 
     # Download pretrained vgg model
     #helper.maybe_download_pretrained_vgg(data_dir)
