@@ -4,6 +4,8 @@ import helper
 import warnings
 from distutils.version import LooseVersion
 import project_tests as tests
+import os
+from tensorflow.python.tools import freeze_graph
 
 
 # Check TensorFlow Version
@@ -149,7 +151,7 @@ def run():
     runs_dir = './runs'
     #tests.test_for_kitti_dataset(data_dir)
 
-    epochs = 2
+    epochs = 5
     batch_size = 4
 
     # Download pretrained vgg model
@@ -186,9 +188,10 @@ def run():
         train_nn(sess, epochs, batch_size, get_batches_fn, train_op, cross_entropy_loss, input_image, correct_label, keep_prob, learning_rate)
 
         # TODO: Save inference data using helper.save_inference_samples
-        saver.save(sess, 'model_test')
         helper.save_inference_samples(runs_dir, data_dir, sess, image_shape, logits, keep_prob, input_image)
-
+        saver.save(sess, 'models.ckpt')
+        tf.train.write_graph(sess.graph_def, '', 'graph.pb')
+        
         # OPTIONAL: Apply the trained model to a video
 
 
