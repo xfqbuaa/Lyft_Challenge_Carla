@@ -28,10 +28,10 @@ image_input = graph.get_tensor_by_name('image_input:0')
 keep_prob = graph.get_tensor_by_name('keep_prob:0')
 softmax = graph.get_tensor_by_name('Softmax:0')
 
-for op in graph.get_operations():
-    print(op.name)
+#for op in graph.get_operations():
+#    print(op.name)
 
-#tf.reset_default_graph()
+tf.reset_default_graph()
 with tf.Session(graph=graph) as sess:
 #with tf.Session() as sess:
     

@@ -15,6 +15,8 @@ image_shape = (192, 256)
 data_dir = '../../../tmp'
 vgg_path = os.path.join(data_dir, 'vgg')
 num_classes = 3
+output = 'segmentation_output_test.mp4'
+clip1 = VideoFileClip(file)
 
 def seg_function(rgb_frame):
     image = scipy.misc.imresize(rgb_frame, image_shape)
@@ -69,8 +71,6 @@ with tf.Session() as sess:
     softmax = graph.get_tensor_by_name('Softmax:0')
 
     # Define pathname to save the output video
-    output = 'segmentation_output_test.mp4'
-    clip1 = VideoFileClip(file)
     clip = clip1.fl_image(seg_pipeline)
     clip.write_videofile(output, audio=False)
 
