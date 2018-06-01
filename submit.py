@@ -41,7 +41,7 @@ def seg_function(rgb_frame):
     im_softmax = probs[0].reshape(image_shape[0], image_shape[1], 3)
     road =  np.where(im_softmax[:,:,1] > 0.5,1,0)
     road = road * 255
-    car = np.where(im_softmax[:,:,2] > 0.5,11,0)
+    car = np.where(im_softmax[:,:,2] > 0.3,1,0)
     car = car * 255
     segmentation = np.zeros_like(image)
     segmentation[:,:,1] = road

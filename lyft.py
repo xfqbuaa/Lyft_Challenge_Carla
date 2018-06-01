@@ -51,7 +51,6 @@ with tf.Session(graph=graph) as sess:
     """
     
     probs = sess.run([softmax], {image_input: [image], keep_prob: 1.0})
-    probs = sess.run([softmax], {image_input: np.expand_dims(image, axis=0), keep_prob: 1.0})
     im_softmax = probs[0].reshape(image_shape[0], image_shape[1], 3)
     segmentation = np.zeros_like(image)
     road =  np.where(im_softmax[:,:,1] > 0.5,1,0)
