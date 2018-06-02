@@ -21,34 +21,38 @@ image_file = '../../../tmp/Train/CameraRGB/15.png'
 image_shape = (192, 256)
 image = scipy.misc.imresize(scipy.misc.imread(image_file), image_shape)
 
-
-GRAPH_FILE = 'frozen.pb'
+"""
+GRAPH_FILE = 'graph.pb'
 graph = load_graph(GRAPH_FILE)
 image_input = graph.get_tensor_by_name('image_input:0')
 keep_prob = graph.get_tensor_by_name('keep_prob:0')
 softmax = graph.get_tensor_by_name('Softmax:0')
-
+"""
 #for op in graph.get_operations():
 #    print(op.name)
 
 tf.reset_default_graph()
-with tf.Session(graph=graph) as sess:
-#with tf.Session() as sess:
+#with tf.Session(graph=graph) as sess:
+with tf.Session() as sess:
     
     #sess.run(tf.global_variables_initializer())
     #sess.run(tf.local_variables_initializer())   
     
     # restore from meta files
-    """
+    
     saver = tf.train.import_meta_graph('./models.ckpt.meta')
     saver.restore(sess, tf.train.latest_checkpoint('./')) 
     graph = tf.get_default_graph()
+    
+    for op in graph.get_operations():
+        print(op.name)
+    
     image_input = graph.get_tensor_by_name('image_input:0')
     keep_prob = graph.get_tensor_by_name('keep_prob:0')    
     softmax = graph.get_tensor_by_name('Softmax:0')
-    tf.train.write_graph(sess.graph_def, "", "test.pb", as_text=False)
+    #tf.train.write_graph(sess.graph_def, "", "test.pb", as_text=False)
     #tf.train.write_graph(graph, "", "test.pb",  as_text=False)
-    """
+    
     
     probs = sess.run([softmax], {image_input: [image], keep_prob: 1.0})
     im_softmax = probs[0].reshape(image_shape[0], image_shape[1], 3)
@@ -60,3 +64,4 @@ with tf.Session(graph=graph) as sess:
     segmentation[:,:,1] = road
     segmentation[:,:,2] = car
     scipy.misc.imsave(os.path.join('./', 'test.png'), np.array(segmentation))
+    

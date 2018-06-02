@@ -11,7 +11,7 @@ if file == 'demo.py':
     print ("Error loading video")
     quit
     
-image_shape = (192, 256) 
+image_shape = (288, 384) 
 data_dir = '../../../tmp'
 vgg_path = os.path.join(data_dir, 'vgg')
 num_classes = 3

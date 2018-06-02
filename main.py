@@ -138,7 +138,7 @@ def train_nn(sess, epochs, batch_size, get_batches_fn, train_op, cross_entropy_l
                 keep_prob: 0.5,
                 learning_rate: 0.0001
             })
-
+        
         print("Epoch: {}/{} | Loss: {}".format(epoch, epochs, loss))
     pass
 tests.test_train_nn(train_nn)
@@ -151,7 +151,7 @@ def run():
     runs_dir = './runs'
     #tests.test_for_kitti_dataset(data_dir)
 
-    epochs = 10
+    epochs = 2
     batch_size = 4
 
     # Download pretrained vgg model
@@ -188,7 +188,7 @@ def run():
         train_nn(sess, epochs, batch_size, get_batches_fn, train_op, cross_entropy_loss, input_image, correct_label, keep_prob, learning_rate)
 
         # TODO: Save inference data using helper.save_inference_samples
-        #helper.save_inference_samples(runs_dir, data_dir, sess, image_shape, logits, keep_prob, input_image)
+        helper.save_inference_samples(runs_dir, data_dir, sess, image_shape, logits, keep_prob, input_image)
         saver.save(sess, './models.ckpt')
         tf.train.write_graph(sess.graph_def, '', 'graph.pb', as_text=False)
         
