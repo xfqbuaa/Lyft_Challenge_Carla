@@ -59,3 +59,4 @@ clip1 = VideoFileClip(file)
 clip = clip1.fl_image(seg_pipeline)
 clip.write_videofile(output, audio=False)
 
+
